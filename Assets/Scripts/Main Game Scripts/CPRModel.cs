@@ -5,8 +5,7 @@ public class CPRModel : MonoBehaviour
 {
     PromptController prompt;
     CPRView cPRView;
-
-
+     
     public bool isStartCPRSimulationNow = false;
     public bool canStartCompression = false;
     public bool isReadyToBreath = false;
@@ -28,6 +27,7 @@ public class CPRModel : MonoBehaviour
     {
         prompt = PromptController.Instance;
         cPRView = CPRController.Instance.view;
+         
         isReadyToBreath = false;
         canStartCompression = false;
         isStartCPRSimulationNow = false;
@@ -44,7 +44,7 @@ public class CPRModel : MonoBehaviour
     {
         if(cPRView == null) cPRView = CPRController.Instance.view;
         if(prompt == null) prompt = PromptController.Instance;
-
+         
         StartCPRTimer();
         StartCPRCompression();
         StartHeadTiltChinLiftManeuver();
@@ -62,7 +62,7 @@ public class CPRModel : MonoBehaviour
         {
             currentSeconds -= 1f * Time.deltaTime;
 
-            if (currentSeconds > 0)
+            if (currentSeconds > 1)
             {
                 cPRView.TimerText.text = currentSeconds > 1 ? $"{(int)currentSeconds} seconds" : $"{(int)currentSeconds} second";
             }
@@ -78,7 +78,7 @@ public class CPRModel : MonoBehaviour
     {
         if (isStartCPRSimulationNow && canStartCompression && !isReadyToBreath)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (CompressionControl())
             {
                 currentCompressCount++;
                 cPRView.CompressCountText.text = $"{currentCompressCount}/30";
@@ -95,18 +95,18 @@ public class CPRModel : MonoBehaviour
     {
         if (isStartCPRSimulationNow && canStartCompression && !isReadyToBreath)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
+            if (CompressionControl())
+            { 
                 float now = Time.time;
                 float interval = now - lastPressTime;
 
                 if (lastPressTime > 0)
                 {
-                    if (interval > 0.65f)
+                    if (interval > 0.62f)
                     {
                         cPRView.CompressIndicatorText.text = "To slow!";
                     }
-                    else if (interval < 0.45f)
+                    else if (interval < 0.48f)
                     {
                         cPRView.CompressIndicatorText.text = "Too fast!";
                     }
@@ -167,6 +167,7 @@ public class CPRModel : MonoBehaviour
     }
     private void RestartCPR()
     {
+        lastPressTime = 0;
         isReadyToBreath = false;
         canStartCompression = true;
         countOfCPRApplied++;
@@ -175,5 +176,21 @@ public class CPRModel : MonoBehaviour
         cPRView.CompressCountText.text = $"{currentCompressCount}/30";
         prompt.DisplayPrompt("Apply Compression again!", 1f, null) ;
     }
+    private bool CompressionControl()
+    {
+        #if UNITY_EDITOR || UNITY_STANDALONE 
+            if (Input.GetMouseButtonDown(0))
+            {
+                return true;
+            }
+        #elif UNITY_IOS || UNITY_ANDROID
+        // Mobile devices
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                return true;
+            }
+        #endif
 
+            return false;
+    }
 }

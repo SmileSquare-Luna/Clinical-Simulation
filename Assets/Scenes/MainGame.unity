@@ -263,7 +263,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 137458275}
-  - component: {fileID: 137458276}
   - component: {fileID: 137458277}
   - component: {fileID: 137458278}
   - component: {fileID: 137458280}
@@ -290,21 +289,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &137458276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137458274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 150666ae76590ce4d9c952467f9e2777, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InstructionPanel: {fileID: 2128091621}
-  InstructionText: {fileID: 1570068882}
-  InstructionOkayBTN: {fileID: 1491519369}
 --- !u!114 &137458277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,7 +457,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 282138517}
-  - component: {fileID: 282138518}
   - component: {fileID: 282138519}
   - component: {fileID: 282138520}
   - component: {fileID: 282138522}
@@ -500,20 +483,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &282138518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 282138516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b0d49fe2682fc841bffd0dceee99b70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  view: {fileID: 137458276}
-  model: {fileID: 1625372629}
 --- !u!114 &282138519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,7 +1777,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 30/30
+  m_text: 0/30
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3415,7 +3384,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1625372628}
-  - component: {fileID: 1625372629}
   - component: {fileID: 1625372630}
   - component: {fileID: 1625372631}
   - component: {fileID: 1625372633}
@@ -3442,25 +3410,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1625372629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1625372627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8fad893c8b090242b0bc7d4c6ba82f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MyInstructions:
-    Instructions:
-    - Verify scene Safety. Make sure the environment is safe for rescuers  and victim.
-    - Check for Responsiveness by tapping the victim on the shoulder
-    - Call for help and dial 811
-    - Check carotid pulse
-  instructionIndex: 0
 --- !u!114 &1625372630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3548,7 +3497,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStartCPRSimulationNow: 0
+  canStartCompression: 0
+  isReadyToBreath: 0
+  isReadyHeadTiltChinLiftManeuver: 0
   startingSeconds: 61
+  countOfCPRApplied: 0
 --- !u!1 &1654183693
 GameObject:
   m_ObjectHideFlags: 0
@@ -4606,7 +4559,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Indicator
+  m_text: Good compression speed!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
