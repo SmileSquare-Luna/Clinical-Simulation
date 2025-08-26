@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class CPRController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static CPRController Instance;
+    public CPRView view;
+    public CPRModel model;
+    private void Awake()
     {
-        
+        Instance = this;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void StartSimulation()
     {
-        
+        model.StartSimulation();
     }
 }

@@ -40,9 +40,11 @@ public class ClickableActionModel : MonoBehaviour
         view.OptionAButton.GetComponentInChildren<TextMeshProUGUI>().text = optionA;
         view.OptionBButton.GetComponentInChildren<TextMeshProUGUI>().text = optionB; 
     }
-
     private void SetNextActionIndex(bool isCorrect)
     {
+        PromptController promptControl = PromptController.Instance;
+        CPRController cprControl = CPRController.Instance;
+
         switch (currentActionIndex)
         {
             case 0:
@@ -88,12 +90,14 @@ public class ClickableActionModel : MonoBehaviour
                 else
                 {
                     Debug.Log("Start CPR");
+                    promptControl.DisplayPrompt("CPR will now begin...", 3f, cprControl.StartSimulation);
                 } 
                 break;
             case 5: 
                 if (isCorrect)
                 {
-                    Debug.Log("Start CPR. Show Button");
+                    Debug.Log("Start CPR.");
+                    promptControl.DisplayPrompt("CPR will now begin...", 3f, cprControl.StartSimulation);
                 }
                 else
                 {

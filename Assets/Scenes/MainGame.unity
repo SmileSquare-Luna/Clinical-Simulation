@@ -266,6 +266,8 @@ GameObject:
   - component: {fileID: 137458276}
   - component: {fileID: 137458277}
   - component: {fileID: 137458278}
+  - component: {fileID: 137458280}
+  - component: {fileID: 137458279}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -331,6 +333,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b1cfceaafe30447906113d0b23d643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &137458279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137458274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86957854f2d20454e93a6ba848b5a6c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PromptPanel: {fileID: 1081997261}
+  PromptText: {fileID: 593203697}
+--- !u!114 &137458280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137458274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1263495dfb7db1f42a6ab9d41ed41dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimerText: {fileID: 1163244819}
+  CompressCountText: {fileID: 883629041}
+  CompressIndicatorText: {fileID: 2020195125}
 --- !u!1 &181273047
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,6 +476,8 @@ GameObject:
   - component: {fileID: 282138518}
   - component: {fileID: 282138519}
   - component: {fileID: 282138520}
+  - component: {fileID: 282138522}
+  - component: {fileID: 282138521}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -509,6 +542,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   view: {fileID: 137458278}
   model: {fileID: 1625372631}
+--- !u!114 &282138521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282138516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f1e5a6c568cce49aaba13fc5b59a23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: {fileID: 137458279}
+  model: {fileID: 1625372632}
+--- !u!114 &282138522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282138516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 109bbe9f36879034f8e7d9751df448a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: {fileID: 137458280}
+  model: {fileID: 1625372633}
 --- !u!1 &359459275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,7 +1115,7 @@ GameObject:
   - component: {fileID: 593203698}
   - component: {fileID: 593203697}
   m_Layer: 5
-  m_Name: Instruction Text (TMP)
+  m_Name: Prompt Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1702,7 +1763,7 @@ GameObject:
   - component: {fileID: 883629041}
   - component: {fileID: 883629043}
   m_Layer: 5
-  m_Name: Timer Info
+  m_Name: Compression Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2359,7 +2420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1081997262
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3357,6 +3418,8 @@ GameObject:
   - component: {fileID: 1625372629}
   - component: {fileID: 1625372630}
   - component: {fileID: 1625372631}
+  - component: {fileID: 1625372633}
+  - component: {fileID: 1625372632}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -3460,6 +3523,32 @@ MonoBehaviour:
   - 3
   currentAnimationIndex: 0
   isPlayingAnimation: 0
+--- !u!114 &1625372632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625372627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c3af33d3b37dd4c8110283cfc0adbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1625372633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625372627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068976cdf99794c46b40878e90f083f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStartCPRSimulationNow: 0
+  startingSeconds: 61
 --- !u!1 &1654183693
 GameObject:
   m_ObjectHideFlags: 0

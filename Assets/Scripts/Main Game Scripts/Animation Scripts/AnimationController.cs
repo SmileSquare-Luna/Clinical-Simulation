@@ -11,7 +11,6 @@ public class AnimationController : MonoBehaviour
     } 
     public void PlayAnimation()
     {
-        model.isPlayingAnimation = true;
-        Debug.Log("Playing Animation");
+        model.isPlayingAnimation = true; 
     }
 }
