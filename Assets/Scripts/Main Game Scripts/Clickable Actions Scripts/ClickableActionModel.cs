@@ -101,7 +101,7 @@ public class ClickableActionModel : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Waiting for 811"); 
+                    Debug.Log("Waiting for 811 to arrive."); 
                     // play animation for 811 ambulance here
                 }
                 break;
