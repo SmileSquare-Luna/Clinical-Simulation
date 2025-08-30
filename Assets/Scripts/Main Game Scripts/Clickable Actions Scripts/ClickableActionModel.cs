@@ -44,17 +44,20 @@ public class ClickableActionModel : MonoBehaviour
     {
         PromptController promptControl = PromptController.Instance;
         CPRController cprControl = CPRController.Instance;
-
+        AnimationModel animModel = AnimationController.Instance.model;
         switch (currentActionIndex)
         {
             case 0:
                 if (isCorrect)
                 {
-                    currentActionIndex = 1; 
+                    currentActionIndex = 1;
+                    animModel.currentAnimationIndex = 1;
+
                 }
                 else
                 {
                     currentActionIndex = 2;
+                    animModel.currentAnimationIndex = 2;
                 }
                 animController.PlayAnimation(); // Will play animation here 
                 break;
@@ -62,22 +65,26 @@ public class ClickableActionModel : MonoBehaviour
             case 2:
                 if (isCorrect)
                 {
-                    currentActionIndex = 3;  
+                    currentActionIndex = 3;
+                    animModel.currentAnimationIndex = 3;
                 }
                 else
                 {
                     currentActionIndex = 4;
+                    animModel.currentAnimationIndex = 4;
                 }
                 animController.PlayAnimation(); // Will play animation here 
                 break;
             case 3:
                 if (isCorrect)
                 {
-                    currentActionIndex = 4; 
+                    currentActionIndex = 4;
+                    animModel.currentAnimationIndex = 4;
                 }
                 else
                 {
                     currentActionIndex = 5;
+                    animModel.currentAnimationIndex = 5;
                 }
                 animController.PlayAnimation(); // Will play animation here 
                 break;
@@ -85,6 +92,7 @@ public class ClickableActionModel : MonoBehaviour
                 if (isCorrect)
                 {
                     currentActionIndex = 5;
+                    animModel.currentAnimationIndex = 5;
                     animController.PlayAnimation(); // Will play animation here 
                 }
                 else

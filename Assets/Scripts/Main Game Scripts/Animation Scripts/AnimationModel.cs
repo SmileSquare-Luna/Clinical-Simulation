@@ -1,42 +1,89 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class AnimationModel : MonoBehaviour
 {
-    public List<float> animationTimePerAction = new List<float>();
+   // public List<float> animationTimePerAction = new List<float>();
     [HideInInspector] public int currentAnimationIndex = 0;
-    public bool isPlayingAnimation = false;
-    private float currentAnimationTime = 0; 
-    public Animator anim;
-   
+    //public bool isPlayingAnimation = false;
+    //private float currentAnimationTime = 0;
+
+    [Header("Player")]
+    public GameObject playerGameGO;
+    private Animator playerAnim; 
+    [Header("Victim")]
+    public GameObject victimGameGO;
+    private Animator victimAnim;
+
+    [Header("Timeline")]
+    public List<PlayableDirector> cutscenesTimeline = new List<PlayableDirector>();
+    public PlayableDirector currentCutscene;
+    public bool isToCheckTimeline;
+   /* private void OnEnable()
+    {
+        if (currentCutscene != null)
+        {
+            currentCutscene.stopped += OnTimelineStopped;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (currentCutscene != null)
+        {
+            currentCutscene.stopped -= OnTimelineStopped;
+        }
+    }*/
+
     private void Start()
     {
-        anim.SetBool("isStandIdle", false);
-        anim.SetFloat("anim_blend", 0f);
+        playerAnim = playerGameGO.GetComponent<Animator>();
+        victimAnim = victimGameGO.GetComponent<Animator>();
+
         currentAnimationIndex = 0;
         AnimationController.Instance.PlayAnimation();
 
 
-    }
-    private void Update()
+    } 
+
+    private void OnTimelineStopped(PlayableDirector obj)
     {
         ClickableActionController actionController = ClickableActionController.Instance;
-        if (!isPlayingAnimation && currentAnimationTime < 0)
-        { 
-            currentAnimationTime = animationTimePerAction[currentAnimationIndex];
-        }
 
-        if (isPlayingAnimation)
-        { 
-            currentAnimationTime -= 1 * Time.deltaTime;
+        isToCheckTimeline = false; 
+        actionController.ShowActionAskMenu();
+        Debug.Log("Done Cutscene!");
+    }
+    public void PlayCutscene(PlayableDirector obj)
+    {
+        if (obj == null) return;
+        EnableCutscene(obj); 
+    }
 
-            if(currentAnimationTime < 0)
+    private void EnableCutscene(PlayableDirector obj)
+    { 
+        foreach (PlayableDirector cutscene in cutscenesTimeline)
+        {
+            if (obj != cutscene)
             {
-                isPlayingAnimation = false;
-                //instructionControl.model.ToggleMenu(true, instructionControl.view.InstructionPanel); // open instruction  
-                actionController.ShowActionAskMenu();
-                return;
-            } 
+                cutscene.gameObject.SetActive(false);
+            }
+            else if (obj == cutscene)
+            {
+                cutscene.gameObject.SetActive(true);
+                cutscene.Play();
+                isToCheckTimeline = true;
+
+
+                if (currentCutscene != null)
+                {
+                    currentCutscene.stopped -= OnTimelineStopped;
+                     
+                    currentCutscene = cutscene;
+                    currentCutscene.stopped += OnTimelineStopped;
+                }
+            }
         }
-    } 
+    }
 }

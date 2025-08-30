@@ -11,6 +11,7 @@ public class AnimationController : MonoBehaviour
     } 
     public void PlayAnimation()
     {
-        model.isPlayingAnimation = true; 
+       // model.isPlayingAnimation = true;
+        model.PlayCutscene(model.cutscenesTimeline[model.currentAnimationIndex]);
     }
 }
