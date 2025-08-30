@@ -7,11 +7,16 @@ public class AnimationModel : MonoBehaviour
     [HideInInspector] public int currentAnimationIndex = 0;
     public bool isPlayingAnimation = false;
     private float currentAnimationTime = 0; 
+    public Animator anim;
+   
     private void Start()
-    { 
-
+    {
+        anim.SetBool("isStandIdle", false);
+        anim.SetFloat("anim_blend", 0f);
         currentAnimationIndex = 0;
         AnimationController.Instance.PlayAnimation();
+
+
     }
     private void Update()
     {
