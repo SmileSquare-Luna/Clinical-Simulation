@@ -2040,6 +2040,7 @@ MonoBehaviour:
   SelectableActionText: {fileID: 34215155}
   OptionAButton: {fileID: 1717523298}
   OptionBButton: {fileID: 646644138}
+  RetryButton: {fileID: 2011538000}
 --- !u!114 &137458278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2081,6 +2082,7 @@ MonoBehaviour:
   TimerText: {fileID: 1163244819}
   CompressCountText: {fileID: 883629041}
   CompressIndicatorText: {fileID: 2020195125}
+  InformationMenu: {fileID: 1654183693}
 --- !u!1 &138322517
 GameObject:
   m_ObjectHideFlags: 0
@@ -4662,7 +4664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.34069845, b: 0.65882355, a: 1}
+  m_Color: {r: 0.4198113, g: 0.70598406, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -14021,7 +14023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.48653468, g: 0.7735849, b: 0.19339623, a: 1}
+  m_Color: {r: 0.4198113, g: 0.70598406, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -20565,7 +20567,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Dialing 811...
+  m_text: Caling 811...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -21307,6 +21309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f32e629230e8440a531ebbc52e8255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  view: {fileID: 137458277}
   AskActionList:
   - AskIndex: 0
     AskActionQuestion: You found someone collapsed on the ground. What should be
@@ -21334,7 +21337,7 @@ MonoBehaviour:
     AskActionQuestion: You check the carotid pulse and find that the victim has no
       pulse. What should you do next?
     AskActionOptionA: Start CPR
-    AskActionOptionB: Wait for 811 to arrive
+    AskActionOptionB: Wait for help to arrive
   selectedAction: 
   currentActionIndex: 0
 --- !u!114 &1625372631
@@ -21350,8 +21353,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentAnimationIndex: 0
+  CPRCamera: {fileID: 440522566}
   playerGameGO: {fileID: 1347645725}
   victimGameGO: {fileID: 1613315380}
+  currentlyPlayingAnimation: 0
   cutscenesTimeline:
   - {fileID: 1782483494}
   - {fileID: 323456504}
@@ -21360,7 +21365,7 @@ MonoBehaviour:
   - {fileID: 945881650}
   - {fileID: 2067658198}
   currentCutscene: {fileID: 1782483494}
-  isToCheckTimeline: 0
+  CutsceneGO: {fileID: 1081431740}
 --- !u!114 &1625372632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21373,6 +21378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c3af33d3b37dd4c8110283cfc0adbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCurrentlyOnPrompt: 0
 --- !u!114 &1625372633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21387,10 +21393,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isStartCPRSimulationNow: 0
   canStartCompression: 0
-  isReadyToBreath: 0
   isReadyHeadTiltChinLiftManeuver: 0
   startingSeconds: 61
   countOfCPRApplied: 0
+  maxCPRToAwakeVictim: 3
 --- !u!1 &1629923915
 GameObject:
   m_ObjectHideFlags: 0
@@ -22435,7 +22441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BPM Information
+  m_text: Information
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -23383,7 +23389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6603774, g: 0.047631554, b: 0, a: 1}
+  m_Color: {r: 0.4198113, g: 0.70598406, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -26486,6 +26492,7 @@ GameObject:
   - component: {fileID: 2011537997}
   - component: {fileID: 2011537999}
   - component: {fileID: 2011537998}
+  - component: {fileID: 2011538000}
   m_Layer: 5
   m_Name: Retry
   m_TagString: Untagged
@@ -26525,7 +26532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.97177523, g: 1, b: 0.41568625, a: 1}
+  m_Color: {r: 0.4198113, g: 0.70598406, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -26550,6 +26557,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011537996}
   m_CullTransparentMesh: 1
+--- !u!114 &2011538000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011537996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2011537998}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2018335976
 GameObject:
   m_ObjectHideFlags: 0
@@ -27022,7 +27073,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Dispatcher : 911, what\u2019s your emergency?"
+  m_text: "Dispatcher : 811, what\u2019s your emergency?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -27698,7 +27749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4198113, g: 0.70598406, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.34069845, b: 0.65882355, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

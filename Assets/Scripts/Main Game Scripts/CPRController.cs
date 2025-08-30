@@ -11,6 +11,8 @@ public class CPRController : MonoBehaviour
     }
     public void StartSimulation()
     {
+        ClickableActionModel clickableActionModel = ClickableActionController.Instance.model;
         model.StartSimulation();
+        clickableActionModel.EnableCPRProcess();
     }
 }

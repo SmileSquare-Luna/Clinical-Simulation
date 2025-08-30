@@ -7,38 +7,30 @@ public class CPRModel : MonoBehaviour
     CPRView cPRView;
      
     public bool isStartCPRSimulationNow = false;
-    public bool canStartCompression = false;
-    public bool isReadyToBreath = false;
+    public bool canStartCompression = false; 
     public bool isReadyHeadTiltChinLiftManeuver = false;
     private float currentSeconds = 0f;
     [SerializeField] private float startingSeconds = 60f;
-    private int currentCompressCount = 0;
-    private int currentBreathGiven = 0;
-    float lastPressTime = 0f;
-
-    // To remove later if the animation is now available
-    private float TiltHeadChinLiftCurrentSeconds = 3f; // it's 2 seconds
-    private float BreathCurrentSeconds = 2f;// it's 1 second
+    private int currentCompressCount = 0; 
+    float lastPressTime = 0f; 
 
     [SerializeField] private int countOfCPRApplied = 0;
+    [SerializeField] private int maxCPRToAwakeVictim = 3;
 
 
     private void Start()
     {
         prompt = PromptController.Instance;
         cPRView = CPRController.Instance.view;
-         
-        isReadyToBreath = false;
+
+        maxCPRToAwakeVictim = Random.Range(1, 7);
+
         canStartCompression = false;
         isStartCPRSimulationNow = false;
         isReadyHeadTiltChinLiftManeuver = false;
         currentSeconds = startingSeconds;
-        currentCompressCount = 0;
-
-
-        countOfCPRApplied = 0;
-        TiltHeadChinLiftCurrentSeconds = 3f;
-        BreathCurrentSeconds = 2f;
+        currentCompressCount = 0; 
+        countOfCPRApplied = 0; 
     }
     private void Update()
     {
@@ -47,9 +39,7 @@ public class CPRModel : MonoBehaviour
          
         StartCPRTimer();
         StartCPRCompression();
-        StartHeadTiltChinLiftManeuver();
-        ApplyBreath();
-        CompressionMeasure();
+        StartHeadTiltChinLiftManeuver(); 
     }
     public void StartSimulation()
     {
@@ -76,15 +66,27 @@ public class CPRModel : MonoBehaviour
     }
     private void StartCPRCompression()
     {
-        if (isStartCPRSimulationNow && canStartCompression && !isReadyToBreath)
+        if (isStartCPRSimulationNow && canStartCompression && !prompt.model.isCurrentlyOnPrompt)
         {
+            AnimationModel animModel = AnimationController.Instance.model;
+            bool isAnimationCompleted = animModel.CheckPlayerAnimationCompleted("compression");
+             
+
             if (CompressionControl())
-            {
-                currentCompressCount++;
-                cPRView.CompressCountText.text = $"{currentCompressCount}/30";
+            {  
+                animModel.ClickCompress();
+
+                if (isAnimationCompleted)
+                { 
+                    currentCompressCount++;
+                    cPRView.CompressCountText.text = $"{currentCompressCount}/30";
+
+                    CompressionMeasure();
+                } 
 
                 if (currentCompressCount >= 30)
                 {
+                    animModel.currentlyPlayingAnimation = false;
                     isReadyHeadTiltChinLiftManeuver = true;
                     canStartCompression = false;
                 }
@@ -93,10 +95,11 @@ public class CPRModel : MonoBehaviour
     }
     private void CompressionMeasure()
     {
-        if (isStartCPRSimulationNow && canStartCompression && !isReadyToBreath)
-        {
+        if (isStartCPRSimulationNow && canStartCompression && !prompt.model.isCurrentlyOnPrompt)
+        { 
+
             if (CompressionControl())
-            { 
+            {
                 float now = Time.time;
                 float interval = now - lastPressTime;
 
@@ -119,62 +122,39 @@ public class CPRModel : MonoBehaviour
                 lastPressTime = now;
             }
         }
-    }
-    private void ApplyBreath()
-    {
-        if (isReadyToBreath && !isReadyHeadTiltChinLiftManeuver)
-        {
-            if(currentBreathGiven < 2)
-            {
-                BreathCurrentSeconds -= 1 * Time.deltaTime;
-                if (BreathCurrentSeconds > 0)
-                {
-                    // play animation here which will breath on the victim
-                    Debug.Log("Playing animation to breath on the victim for 1 second");
-                }
-                else
-                {
-                    currentBreathGiven++;
-                    BreathCurrentSeconds = 2f;
-                }
-            }
-            else
-            {
-                // start CPR again 
-                RestartCPR();
-            }
-        }
-    }
+    } 
     private void StartHeadTiltChinLiftManeuver()
     {
         if (isReadyHeadTiltChinLiftManeuver)
         {
-            TiltHeadChinLiftCurrentSeconds -= 1f;
 
-            if(TiltHeadChinLiftCurrentSeconds > 0)  
-            {
-                // play animation here which will tilt the head and lift chin in 2 seconds
-                Debug.Log("Playing animation for tilt head and lift chin");
-            }
-            else
+            AnimationModel animModel = AnimationController.Instance.model; 
+            bool isAnimationCompleted = animModel.CheckPlayerAnimationCompleted("give breath"); 
+
+
+            if (isAnimationCompleted)
             {
                 isReadyHeadTiltChinLiftManeuver = false;
-                isReadyToBreath = true; 
-                TiltHeadChinLiftCurrentSeconds = 3f;
-                BreathCurrentSeconds = 2f;
+                // start CPR again 
+                RestartCPR();
+            }
+            else
+            { 
+                animModel.GiveBreath();
             }
         }
     }
     private void RestartCPR()
     {
-        lastPressTime = 0;
-        isReadyToBreath = false;
+        lastPressTime = 0; 
         canStartCompression = true;
-        countOfCPRApplied++;
+
         currentCompressCount = 0;
-        currentBreathGiven = 0;
         cPRView.CompressCountText.text = $"{currentCompressCount}/30";
-        prompt.DisplayPrompt("Apply Compression again!", 1f, null) ;
+        cPRView.CompressIndicatorText.text = "";
+
+
+        prompt.DisplayPrompt("Do another set of compressions.”!", 1f, CheckFinishCPR);
     }
     private bool CompressionControl()
     {
@@ -192,5 +172,17 @@ public class CPRModel : MonoBehaviour
         #endif
 
             return false;
+    }
+    private void CheckFinishCPR()
+    {
+        countOfCPRApplied++;
+        if (countOfCPRApplied >= maxCPRToAwakeVictim)
+        {
+            cPRView.InformationMenu.SetActive(false);
+        }
+        else
+        {
+            cPRView.InformationMenu.SetActive(true);
+        }
     }
 }

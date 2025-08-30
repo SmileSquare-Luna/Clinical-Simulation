@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClickableActionModel : MonoBehaviour
 {
     AnimationController animController;
-    ClickableActionView view;
+    [SerializeField] private ClickableActionView view;
     public List<AskActionData> AskActionList = new List<AskActionData>();
     [HideInInspector] public string selectedAction;
     [HideInInspector] public int currentActionIndex = 0; 
+
     private void Start()
     {
+        view.RetryButton.onClick.AddListener(RefreshScene);
         currentActionIndex = 0; 
     }
     public void ActionMenuToggle(bool isOpen, GameObject menuGO)
@@ -96,23 +99,34 @@ public class ClickableActionModel : MonoBehaviour
                     animController.PlayAnimation(); // Will play animation here 
                 }
                 else
-                {
-                    Debug.Log("Start CPR");
+                { 
                     promptControl.DisplayPrompt("CPR will now begin...", 3f, cprControl.StartSimulation);
+                    cprControl.view.InformationMenu.SetActive(true);
                 } 
                 break;
             case 5: 
                 if (isCorrect)
-                {
-                    Debug.Log("Start CPR.");
+                { 
                     promptControl.DisplayPrompt("CPR will now begin...", 3f, cprControl.StartSimulation);
+                    cprControl.view.InformationMenu.SetActive(true);
                 }
                 else
                 {
-                    Debug.Log("Waiting for 811 to arrive."); 
+                    Debug.Log("Waiting for 811 to arrive.");
                     // play animation for 811 ambulance here
+                    promptControl.model.ShowPrompt("Waiting for help to arrive...", 10f, RefreshScene); 
                 }
                 break;
         }
     }
+    public void EnableCPRProcess()
+    { 
+        AnimationModel animModel = AnimationController.Instance.model;
+        animModel.CutsceneGO.SetActive(false);
+        animModel.SetCPR(true);
+    }
+    private void RefreshScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    } 
 }

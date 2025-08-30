@@ -6,6 +6,7 @@ public class PromptModel : MonoBehaviour
 {
     PromptView view;
 
+    public bool isCurrentlyOnPrompt;
 
     private void Start()
     {
@@ -20,11 +21,12 @@ public class PromptModel : MonoBehaviour
     private IEnumerator DisplayPromptMessage(string message, float secondsToClosePrompt, Action actionToProceed)
     {
         view = PromptController.Instance.view;
-
+        isCurrentlyOnPrompt = true;
         view.PromptPanel.SetActive(true);
         view.PromptText.text = message;
         yield return new WaitForSeconds(secondsToClosePrompt);
         view.PromptPanel.SetActive(false);
-        if(actionToProceed != null) actionToProceed();
+        isCurrentlyOnPrompt = false;
+        if (actionToProceed != null) actionToProceed();
     }
 }

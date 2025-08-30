@@ -8,4 +8,5 @@ public class ClickableActionView : MonoBehaviour
     public TextMeshProUGUI SelectableActionText;
     public Button OptionAButton;
     public Button OptionBButton;
+    public Button RetryButton;
 }
