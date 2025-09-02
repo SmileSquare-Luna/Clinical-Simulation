@@ -14,11 +14,12 @@ public class ClickableActionModel : MonoBehaviour
     private void Start()
     {
         view.RetryButton.onClick.AddListener(RefreshScene);
+        view.QuitButton.onClick.AddListener(QuitGame);
         currentActionIndex = 0; 
     }
     public void ActionMenuToggle(bool isOpen, GameObject menuGO)
     {
-        menuGO.SetActive(isOpen);
+        if(menuGO != null) menuGO.SetActive(isOpen);
         string question = AskActionList[currentActionIndex].AskActionQuestion;
         string optionA = AskActionList[currentActionIndex].AskActionOptionA;
         string optionB = AskActionList[currentActionIndex].AskActionOptionB;  
@@ -38,10 +39,12 @@ public class ClickableActionModel : MonoBehaviour
     }
     private void ShowActionMenu(string askActionMessage, string optionA, string optionB)
     {
+        TextMeshProUGUI optionAText = view.OptionAButton.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI optionBText = view.OptionBButton.GetComponentInChildren<TextMeshProUGUI>();
         view = ClickableActionController.Instance.view;
         view.SelectableActionText.text = askActionMessage;
-        view.OptionAButton.GetComponentInChildren<TextMeshProUGUI>().text = optionA;
-        view.OptionBButton.GetComponentInChildren<TextMeshProUGUI>().text = optionB; 
+        if (optionAText != null) optionAText.text = optionA;
+        if (optionBText != null) optionBText.text = optionB; 
     }
     private void SetNextActionIndex(bool isCorrect)
     {
@@ -125,8 +128,14 @@ public class ClickableActionModel : MonoBehaviour
         animModel.CutsceneGO.SetActive(false);
         animModel.SetCPR(true);
     }
-    private void RefreshScene()
+    public void RefreshScene()
     {
+        view.RetryButton.onClick.RemoveAllListeners();
+        view.QuitButton.onClick.RemoveAllListeners();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    } 
+    }  
+    public void QuitGame()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }

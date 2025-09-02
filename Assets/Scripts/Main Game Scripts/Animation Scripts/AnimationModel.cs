@@ -84,6 +84,9 @@ public class AnimationModel : MonoBehaviour
             playerAnim.SetBool("isDoneCPR", false);
             playerAnim.SetBool("isGiveBreath", false);
             playerAnim.Play("compression", 0, 0f);
+
+            victimAnim.SetBool("isCompression", true);
+            victimAnim.Play("compression", 0, 0f);
         }
     }
     public void DoneCPR()
@@ -106,6 +109,10 @@ public class AnimationModel : MonoBehaviour
             playerAnim.SetBool("isDoneCPR", false);
             playerAnim.SetBool("isGiveBreath", true);
             playerAnim.Play("give breath", 0, 0f);
+
+
+            victimAnim.SetBool("isCompression", false);
+            victimAnim.Play("cpr idle", 0, 0f);
         }
     }
     public void StopAnimation()

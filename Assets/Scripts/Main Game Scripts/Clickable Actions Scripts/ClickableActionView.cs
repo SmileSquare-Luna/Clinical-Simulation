@@ -9,4 +9,5 @@ public class ClickableActionView : MonoBehaviour
     public Button OptionAButton;
     public Button OptionBButton;
     public Button RetryButton;
+    public Button QuitButton;
 }

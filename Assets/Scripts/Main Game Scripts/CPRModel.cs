@@ -179,6 +179,7 @@ public class CPRModel : MonoBehaviour
         if (countOfCPRApplied >= maxCPRToAwakeVictim)
         {
             cPRView.InformationMenu.SetActive(false);
+            ClickableActionController.Instance.model.RefreshScene();
         }
         else
         {
