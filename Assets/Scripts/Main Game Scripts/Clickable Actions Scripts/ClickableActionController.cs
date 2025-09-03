@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClickableActionController : MonoBehaviour
 {
@@ -21,5 +22,9 @@ public class ClickableActionController : MonoBehaviour
     public void ShowActionAskMenu()
     {
         model.ActionMenuToggle(true, view.SelectableActionGO);
+    }
+    public void SceneHandler(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

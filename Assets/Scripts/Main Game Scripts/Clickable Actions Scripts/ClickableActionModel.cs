@@ -51,6 +51,8 @@ public class ClickableActionModel : MonoBehaviour
         PromptController promptControl = PromptController.Instance;
         CPRController cprControl = CPRController.Instance;
         AnimationModel animModel = AnimationController.Instance.model;
+        ScoreRateModel s_RateModel = ScoreRateController.Instance.s_RateModel;
+
         switch (currentActionIndex)
         {
             case 0:
@@ -58,6 +60,7 @@ public class ClickableActionModel : MonoBehaviour
                 {
                     currentActionIndex = 1;
                     animModel.currentAnimationIndex = 1;
+                    s_RateModel.currentScore+=10;
 
                 }
                 else
@@ -73,6 +76,7 @@ public class ClickableActionModel : MonoBehaviour
                 {
                     currentActionIndex = 3;
                     animModel.currentAnimationIndex = 3;
+                    s_RateModel.currentScore += 10;
                 }
                 else
                 {
@@ -86,6 +90,7 @@ public class ClickableActionModel : MonoBehaviour
                 {
                     currentActionIndex = 4;
                     animModel.currentAnimationIndex = 4;
+                    s_RateModel.currentScore += 10;
                 }
                 else
                 {
@@ -97,6 +102,7 @@ public class ClickableActionModel : MonoBehaviour
             case 4:
                 if (isCorrect)
                 {
+                    s_RateModel.currentScore += 10;
                     currentActionIndex = 5;
                     animModel.currentAnimationIndex = 5;
                     animController.PlayAnimation(); // Will play animation here 
@@ -109,18 +115,25 @@ public class ClickableActionModel : MonoBehaviour
                 break;
             case 5: 
                 if (isCorrect)
-                { 
+                {
+                    s_RateModel.currentScore += 10;
                     promptControl.DisplayPrompt("CPR will now begin...", 3f, cprControl.StartSimulation);
                     cprControl.view.InformationMenu.SetActive(true);
                 }
                 else
                 {
-                    Debug.Log("Waiting for 811 to arrive.");
-                    // play animation for 811 ambulance here
-                    promptControl.model.ShowPrompt("Waiting for help to arrive...", 10f, RefreshScene); 
+                    EndAnimation();
                 }
                 break;
         }
+    }
+    public void EndAnimation()
+    {
+        animController.model.CutsceneGO.SetActive(true);
+        animController.model.SetCPR(false);
+        CPRController.Instance.view.InformationMenu.SetActive(false);
+        AnimationController.Instance.model.currentAnimationIndex = 6;
+        animController.PlayAnimation(); // Will play animation here   
     }
     public void EnableCPRProcess()
     { 

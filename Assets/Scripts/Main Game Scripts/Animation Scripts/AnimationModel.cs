@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class AnimationModel : MonoBehaviour
 { 
@@ -39,6 +40,22 @@ public class AnimationModel : MonoBehaviour
          
         actionController.ShowActionAskMenu();
         Debug.Log("Done Cutscene!");
+
+        switch (currentAnimationIndex)
+        {
+            case 4:
+                AnimationController.Instance.view.Dial811GO.SetActive(false);
+                break;
+            case 6:
+                // game end
+                AnimationController.Instance.view.BlackScreen.SetActive(true);
+                ScoreRateModel s_RateModel = ScoreRateController.Instance.s_RateModel;
+                ScoreRateView s_RateView = ScoreRateController.Instance.s_RateView;
+
+                int overAllScore = s_RateModel.currentScore + s_RateModel.currentCPRScore; 
+                s_RateView.DisplayScore(overAllScore, 1.5f);
+                break;
+        } 
     }
     public void PlayCutscene(PlayableDirector obj)
     {
@@ -80,6 +97,7 @@ public class AnimationModel : MonoBehaviour
         if (!currentlyPlayingAnimation)
         {
             currentlyPlayingAnimation = true;
+
             playerAnim.SetBool("isCompress", true);
             playerAnim.SetBool("isDoneCPR", false);
             playerAnim.SetBool("isGiveBreath", false);
@@ -156,6 +174,7 @@ public class AnimationModel : MonoBehaviour
                 {
                     currentlyPlayingAnimation = false;
                 }
+                 
                 return true; // only true once
             }
         }

@@ -13,6 +13,19 @@ public class PromptController : MonoBehaviour
 
     public void DisplayPrompt(string promptMessage, float secondsToClosePrompt, Action actionToProceed)
     {
-        model.ShowPrompt(promptMessage, secondsToClosePrompt, actionToProceed);
+        CPRModel cPR_Model = CPRController.Instance.model;
+        CPRView cPR_View = CPRController.Instance.view;
+        if (promptMessage == "Do another set of compressions.") cPR_Model.countOfCPRApplied++;
+
+        if (cPR_Model.countOfCPRApplied >= cPR_Model.maxCPRToAwakeVictim)
+        {
+            cPR_View.InformationMenu.SetActive(false);
+            ClickableActionController.Instance.model.EndAnimation();
+        }
+        else
+        {
+            cPR_View.InformationMenu.SetActive(true);
+            model.ShowPrompt(promptMessage, secondsToClosePrompt, actionToProceed);
+        }
     }
 }

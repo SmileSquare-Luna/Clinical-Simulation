@@ -14,8 +14,8 @@ public class CPRModel : MonoBehaviour
     private int currentCompressCount = 0; 
     float lastPressTime = 0f; 
 
-    [SerializeField] private int countOfCPRApplied = 0;
-    [SerializeField] private int maxCPRToAwakeVictim = 3;
+    public int countOfCPRApplied = 0;
+    public int maxCPRToAwakeVictim = 3;
 
 
     private void Start()
@@ -23,7 +23,7 @@ public class CPRModel : MonoBehaviour
         prompt = PromptController.Instance;
         cPRView = CPRController.Instance.view;
 
-        maxCPRToAwakeVictim = Random.Range(1, 7);
+        //maxCPRToAwakeVictim = Random.Range(1, 7);
 
         canStartCompression = false;
         isStartCPRSimulationNow = false;
@@ -76,13 +76,14 @@ public class CPRModel : MonoBehaviour
             {  
                 animModel.ClickCompress();
 
+
                 if (isAnimationCompleted)
                 { 
                     currentCompressCount++;
-                    cPRView.CompressCountText.text = $"{currentCompressCount}/30";
+                    if(currentCompressCount < 31) cPRView.CompressCountText.text = $"{currentCompressCount}/30";
 
                     CompressionMeasure();
-                } 
+                }
 
                 if (currentCompressCount >= 30)
                 {
@@ -96,8 +97,8 @@ public class CPRModel : MonoBehaviour
     private void CompressionMeasure()
     {
         if (isStartCPRSimulationNow && canStartCompression && !prompt.model.isCurrentlyOnPrompt)
-        { 
-
+        {
+            ScoreRateModel s_RateModel = ScoreRateController.Instance.s_RateModel;
             if (CompressionControl())
             {
                 float now = Time.time;
@@ -108,10 +109,13 @@ public class CPRModel : MonoBehaviour
                     if (interval > 0.62f)
                     {
                         cPRView.CompressIndicatorText.text = "To slow!";
+                        s_RateModel.currentCPRScore--;
+
                     }
                     else if (interval < 0.48f)
                     {
                         cPRView.CompressIndicatorText.text = "Too fast!";
+                        s_RateModel.currentCPRScore--;
                     }
                     else
                     {
@@ -154,7 +158,7 @@ public class CPRModel : MonoBehaviour
         cPRView.CompressIndicatorText.text = "";
 
 
-        prompt.DisplayPrompt("Do another set of compressions.”!", 1f, CheckFinishCPR);
+        prompt.DisplayPrompt("Do another set of compressions.", 1f, CheckFinishCPR);
     }
     private bool CompressionControl()
     {
@@ -175,11 +179,9 @@ public class CPRModel : MonoBehaviour
     }
     private void CheckFinishCPR()
     {
-        countOfCPRApplied++;
         if (countOfCPRApplied >= maxCPRToAwakeVictim)
         {
-            cPRView.InformationMenu.SetActive(false);
-            ClickableActionController.Instance.model.RefreshScene();
+            cPRView.InformationMenu.SetActive(false); 
         }
         else
         {
