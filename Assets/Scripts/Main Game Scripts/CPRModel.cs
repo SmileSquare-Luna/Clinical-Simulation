@@ -106,13 +106,13 @@ public class CPRModel : MonoBehaviour
 
                 if (lastPressTime > 0)
                 {
-                    if (interval > 0.62f)
+                    if (interval > 0.6f)
                     {
                         cPRView.CompressIndicatorText.text = "To slow!";
                         s_RateModel.currentCPRScore--;
 
                     }
-                    else if (interval < 0.48f)
+                    else if (interval < 0.5f)
                     {
                         cPRView.CompressIndicatorText.text = "Too fast!";
                         s_RateModel.currentCPRScore--;
