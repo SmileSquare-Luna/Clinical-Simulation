@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ClickableActionModel : MonoBehaviour
 {
@@ -9,8 +11,11 @@ public class ClickableActionModel : MonoBehaviour
     [SerializeField] private ClickableActionView view;
     public List<AskActionData> AskActionList = new List<AskActionData>();
     [HideInInspector] public string selectedAction;
-    [HideInInspector] public int currentActionIndex = 0; 
+    [HideInInspector] public int currentActionIndex = 0;
 
+    public Color blueColor;
+    public Color redColor;
+    public Color greenColor;
     private void Start()
     {
         view.RetryButton.onClick.AddListener(RefreshScene);
@@ -27,7 +32,7 @@ public class ClickableActionModel : MonoBehaviour
         if (isOpen)
             ShowActionMenu(question, optionA, optionB);
     }
-    public void SelectAcion(string action, bool isCorrect)
+    /*public void SelectAcion(string action, bool isCorrect)
     {
         view = ClickableActionController.Instance.view;
         animController = AnimationController.Instance;
@@ -36,7 +41,49 @@ public class ClickableActionModel : MonoBehaviour
         ActionMenuToggle(false, view.SelectableActionGO); 
         SetNextActionIndex(isCorrect);
 
+    }*/
+
+    public void SelectAcion(string action, bool isCorrect)
+    {
+        view = ClickableActionController.Instance.view;
+        animController = AnimationController.Instance;
+
+        selectedAction = action;
+
+        StartCoroutine(selectActionCoroutine(isCorrect));
     }
+
+    private IEnumerator selectActionCoroutine(bool isCorrect)
+    {
+        view.OptionAButton.GetComponent<Button>().interactable = false;
+        view.OptionBButton.GetComponent<Button>().interactable = false;
+
+        if (isCorrect)
+        {
+            view.OptionAButton.GetComponent<Image>().color = greenColor;
+            view.OptionBButton.GetComponent<Image>().color = blueColor;
+        }
+        else
+        {
+            view.OptionAButton.GetComponent<Image>().color = blueColor;
+            view.OptionBButton.GetComponent<Image>().color = redColor;
+        }
+        yield return new WaitForSeconds(3f);
+        view.OptionAButton.GetComponent<Button>().interactable = true;
+        view.OptionBButton.GetComponent<Button>().interactable = true;
+        view.OptionAButton.GetComponent<Image>().color = blueColor;
+        view.OptionBButton.GetComponent<Image>().color = blueColor;
+        if(isCorrect)
+        {
+            ActionMenuToggle(false, view.SelectableActionGO); 
+        }
+        else
+        {
+            ActionMenuToggle(true, view.SelectableActionGO);
+        }
+        SetNextActionIndex(isCorrect);
+    }
+
     private void ShowActionMenu(string askActionMessage, string optionA, string optionB)
     {
         TextMeshProUGUI optionAText = view.OptionAButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -46,7 +93,7 @@ public class ClickableActionModel : MonoBehaviour
         if (optionAText != null) optionAText.text = optionA;
         if (optionBText != null) optionBText.text = optionB; 
     }
-    private void SetNextActionIndex(bool isCorrect)
+    /*private void SetNextActionIndex(bool isCorrect)
     {
         PromptController promptControl = PromptController.Instance;
         CPRController cprControl = CPRController.Instance;
@@ -109,7 +156,7 @@ public class ClickableActionModel : MonoBehaviour
                 }
                 else
                 { 
-                    promptControl.DisplayPrompt("CPR will now begin...", 3f, cprControl.StartSimulation);
+                    promptControl.DisplayPrompt("CPR will now begin... Tap to start chest compressions. Follow the beat of the metronome.", 3f, cprControl.StartSimulation);
                     cprControl.view.InformationMenu.SetActive(true);
                 } 
                 break;
@@ -117,12 +164,95 @@ public class ClickableActionModel : MonoBehaviour
                 if (isCorrect)
                 {
                     s_RateModel.currentScore += 10;
-                    promptControl.DisplayPrompt("CPR will now begin...", 3f, cprControl.StartSimulation);
+                    promptControl.DisplayPrompt("CPR will now begin... Tap to start chest compressions. Follow the beat of the metronome.", 3f, cprControl.StartSimulation);
                     cprControl.view.InformationMenu.SetActive(true);
                 }
                 else
                 {
                     EndAnimation();
+                }
+                break;
+        }
+    }*/
+    private void SetNextActionIndex(bool isCorrect)
+    {
+        PromptController promptControl = PromptController.Instance;
+        CPRController cprControl = CPRController.Instance;
+        AnimationModel animModel = AnimationController.Instance.model;
+        ScoreRateModel s_RateModel = ScoreRateController.Instance.s_RateModel;
+
+        switch (currentActionIndex)
+        {
+            case 0:
+                if (isCorrect)
+                {
+                    currentActionIndex = 1;
+                    animModel.currentAnimationIndex = 1;
+                    s_RateModel.currentScore+=10;
+                    animController.PlayAnimation(); // Will play animation here 
+                }
+                else
+                {
+                    /*currentActionIndex = 2;
+                    animModel.currentAnimationIndex = 2;*/
+                }
+                //animController.PlayAnimation(); // Will play animation here 
+                break;
+            case 1: 
+            case 2:
+                if (isCorrect)
+                {
+                    currentActionIndex = 3;
+                    animModel.currentAnimationIndex = 3;
+                    s_RateModel.currentScore += 10;
+                    animController.PlayAnimation(); // Will play animation here 
+                }
+                else
+                {
+                    /*currentActionIndex = 4;
+                    animModel.currentAnimationIndex = 4;*/
+                }
+                //animController.PlayAnimation(); // Will play animation here 
+                break;
+            case 3:
+                if (isCorrect)
+                {
+                    currentActionIndex = 4;
+                    animModel.currentAnimationIndex = 4;
+                    s_RateModel.currentScore += 10;
+                    animController.PlayAnimation(); // Will play animation here 
+                }
+                else
+                {
+                   /* currentActionIndex = 5;
+                    animModel.currentAnimationIndex = 5;*/
+                }
+                //animController.PlayAnimation(); // Will play animation here 
+                break;
+            case 4:
+                if (isCorrect)
+                {
+                    s_RateModel.currentScore += 10;
+                    currentActionIndex = 5;
+                    animModel.currentAnimationIndex = 5;
+                    animController.PlayAnimation(); // Will play animation here 
+                }
+                else
+                { 
+                    /*promptControl.DisplayPrompt("CPR will now begin... Tap to start chest compressions. Follow the beat of the metronome.", 3f, cprControl.StartSimulation);
+                    cprControl.view.InformationMenu.SetActive(true);*/
+                } 
+                break;
+            case 5: 
+                if (isCorrect)
+                {
+                    s_RateModel.currentScore += 10;
+                    promptControl.DisplayPrompt("CPR will now begin... Tap to start chest compressions. Follow the beat of the metronome.", 3f, cprControl.StartSimulation);
+                    cprControl.view.InformationMenu.SetActive(true);
+                }
+                else
+                {
+                    //EndAnimation();
                 }
                 break;
         }

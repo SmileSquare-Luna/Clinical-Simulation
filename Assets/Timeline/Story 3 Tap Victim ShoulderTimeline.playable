@@ -599,6 +599,23 @@ MonoBehaviour:
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_ApplyOffsets: 0
+--- !u!114 &1906754389412210791
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
+  m_Name: AudioPlayableAsset(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 8300000, guid: 8f96f2352abe96344a8ea653025422c1, type: 3}
+  m_Loop: 0
+  m_bufferingTime: 0.1
+  m_ClipProperties:
+    volume: 1
 --- !u!114 &3673853042262956241
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -684,10 +701,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 0.5446837396671387
-    m_ClipIn: 10.661350406333792
-    m_Asset: {fileID: 8531764619905203454}
-    m_Duration: 2.171982926999533
+    m_Start: 0.41666666666667185
+    m_ClipIn: 9.266666666666671
+    m_Asset: {fileID: 1906754389412210791}
+    m_Duration: 2.1666666666666616
     m_TimeScale: 1
     m_ParentTrack: {fileID: 6807360207830166474}
     m_EaseInDuration: 0
@@ -751,7 +768,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: dialogue
+    m_DisplayName: final dialog
   m_Markers:
     m_Objects: []
   m_TrackProperties:
@@ -1194,23 +1211,6 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events: []
---- !u!114 &8531764619905203454
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
-  m_Name: AudioPlayableAsset(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: 61121db836a530746bc67b1d3a7b6093, type: 3}
-  m_Loop: 0
-  m_bufferingTime: 0.1
-  m_ClipProperties:
-    volume: 0.8
 --- !u!74 &8947522927480952868
 AnimationClip:
   m_ObjectHideFlags: 0

@@ -73,3 +73,5 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+iOS/Data/sharedassets1.assets.resS
+iOS/Libraries/libiPhone-lib.a
