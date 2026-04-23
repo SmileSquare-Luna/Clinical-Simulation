@@ -68,7 +68,7 @@ public class ClickableActionModel : MonoBehaviour
             view.OptionAButton.GetComponent<Image>().color = blueColor;
             view.OptionBButton.GetComponent<Image>().color = redColor;
         }
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         view.OptionAButton.GetComponent<Button>().interactable = true;
         view.OptionBButton.GetComponent<Button>().interactable = true;
         view.OptionAButton.GetComponent<Image>().color = blueColor;
@@ -247,7 +247,7 @@ public class ClickableActionModel : MonoBehaviour
                 if (isCorrect)
                 {
                     s_RateModel.currentScore += 10;
-                    promptControl.DisplayPrompt("CPR will now begin... Tap to start chest compressions. Follow the beat of the metronome.", 3f, cprControl.StartSimulation);
+                    promptControl.DisplayPrompt("CPR will now begin... Tap to start chest compressions. Follow the beat of the metronome.", 1f, cprControl.StartSimulation);
                     cprControl.view.InformationMenu.SetActive(true);
                 }
                 else
